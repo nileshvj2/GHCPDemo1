@@ -18,24 +18,24 @@ def multiply(num1, num2):
 class TodoList:
     def __init__(self):
         self.tasks = []
+        self.next_id = 1
     
     def add_task(self, task_description):
         """Add a new task to the todo list"""
         task = {
-            'id': len(self.tasks) + 1,
+            'id': self.next_id,
             'description': task_description,
             'completed': False
         }
         self.tasks.append(task)
+        self.next_id += 1
         return task
     
     def remove_task(self, task_id):
         """Remove a task by ID"""
-        for task in self.tasks:
-            if task['id'] == task_id:
-                self.tasks.remove(task)
-                return True
-        return False
+        original_length = len(self.tasks)
+        self.tasks = [task for task in self.tasks if task['id'] != task_id]
+        return len(self.tasks) < original_length
     
     def mark_completed(self, task_id):
         """Mark a task as completed"""
