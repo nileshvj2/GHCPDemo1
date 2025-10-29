@@ -48,18 +48,23 @@ def main():
         col1, col2, col3 = st.columns(3)
         
         # Divide states into three columns
-        states_per_column = len(usa_states) // 3 + 1
+        states_per_column = len(usa_states) // 3
+        remainder = len(usa_states) % 3
+        
+        # Calculate split indices for balanced distribution
+        split1 = states_per_column + (1 if remainder > 0 else 0)
+        split2 = split1 + states_per_column + (1 if remainder > 1 else 0)
         
         with col1:
-            for state in usa_states[:17]:
+            for state in usa_states[:split1]:
                 st.write(f"• {state}")
         
         with col2:
-            for state in usa_states[17:34]:
+            for state in usa_states[split1:split2]:
                 st.write(f"• {state}")
         
         with col3:
-            for state in usa_states[34:]:
+            for state in usa_states[split2:]:
                 st.write(f"• {state}")
     
     st.divider()
